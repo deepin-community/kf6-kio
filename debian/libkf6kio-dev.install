@@ -1,0 +1,12 @@
+usr/include/KF6/KIO/
+usr/include/KF6/KIOCore/
+usr/include/KF6/KIOFileWidgets/
+usr/include/KF6/KIOGui/
+usr/include/KF6/KIOWidgets/
+usr/lib/*/cmake/KF6KIO/
+usr/lib/*/libKF6KIOCore.so
+usr/lib/*/libKF6KIOFileWidgets.so
+usr/lib/*/libKF6KIOGui.so
+usr/lib/*/libKF6KIOWidgets.so
+usr/lib/*/qt6/plugins/designer/kio6widgets.so
+usr/share/kdevappwizard/templates/kioworker6.tar.bz2

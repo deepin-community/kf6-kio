@@ -1,15 +1,152 @@
-Source: template-repository
-Section: unknown
+Source: kf6-kio
+Section: libs
 Priority: optional
-Maintainer: Tsic404 <liuheng@deepin.org>
-Build-Depends: debhelper (>= 11)
-Standards-Version: 4.1.3
-Homepage: https://github.com/deepin-community/template-repository
-#Vcs-Browser: https://salsa.debian.org/debian/deepin-community-template-repository
-#Vcs-Git: https://salsa.debian.org/debian/deepin-community-template-repository.git
+Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
+Uploaders: Aurélien COUDERC <coucouf@debian.org>,
+           Patrick Franz <deltaone@debian.org>,
+Build-Depends: cmake (>= 3.16~),
+               debhelper-compat (= 13),
+               dh-sequence-kf6,
+               dh-sequence-pkgkde-symbolshelper,
+               dh-sequence-sodeps,
+               doxygen,
+               extra-cmake-modules (>= 6.6.0~),
+               gettext,
+               kded6-dev (>= 6.6.0~),
+               libacl1-dev,
+               libkf6archive-dev (>= 6.6.0~),
+               libkf6auth-dev (>= 6.6.0~),
+               libkf6bookmarks-dev (>= 6.6.0~),
+               libkf6colorscheme-dev (>= 6.6.0~),
+               libkf6completion-dev (>= 6.6.0~),
+               libkf6config-dev (>= 6.6.0~),
+               libkf6configwidgets-dev (>= 6.6.0~),
+               libkf6coreaddons-dev (>= 6.6.0~),
+               libkf6crash-dev (>= 6.6.0~),
+               libkf6dbusaddons-dev (>= 6.6.0~),
+               libkf6doctools-dev (>= 6.6.0~),
+               libkf6guiaddons-dev (>= 6.6.0~),
+               libkf6i18n-dev (>= 6.6.0~),
+               libkf6iconthemes-dev (>= 6.6.0~),
+               libkf6itemviews-dev (>= 6.6.0~),
+               libkf6jobwidgets-dev (>= 6.6.0~),
+               libkf6service-dev (>= 6.6.0~),
+               libkf6solid-dev (>= 6.6.0~),
+               libkf6wallet-dev (>= 6.6.0~),
+               libkf6widgetsaddons-dev (>= 6.6.0~),
+               libkf6windowsystem-dev (>= 6.6.0~),
+               libmount-dev [linux-any],
+               libxml2-dev,
+               libxslt1-dev,
+               qt6-5compat-dev (>= 6.5.0~),
+               qt6-base-dev (>= 6.5.0+dfsg~),
+               qt6-tools-dev (>= 6.5.0~),
+Standards-Version: 4.7.0
+Homepage: https://invent.kde.org/frameworks/kio
+Vcs-Browser: https://salsa.debian.org/qt-kde-team/kde/kf6-kio
+Vcs-Git: https://salsa.debian.org/qt-kde-team/kde/kf6-kio.git
+Rules-Requires-Root: no
 
-Package: template-repository
+Package: kio6
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Depends: kded6, ${misc:Depends}, ${shlibs:Depends},
+Recommends: switcheroo-control [amd64 i386], systemsettings,
+Description: resource and network access abstraction
+ KDE Input/Output framework provides a single API for
+ operating on files, whether local or on a remote server.
+ Additionally, KIO Slaves provide support for individual
+ protocols. Some particularly useful ones are http, ftp,
+ sftp, smb, nfs, ssh (fish), man, tar and zip.
+
+Package: libkf6kio-dev
+Section: libdevel
+Architecture: any
+Depends: libkf6bookmarks-dev (>= 6.6.0~),
+         libkf6completion-dev (>= 6.6.0~),
+         libkf6config-dev (>= 6.6.0~),
+         libkf6coreaddons-dev (>= 6.6.0~),
+         libkf6itemviews-dev (>= 6.6.0~),
+         libkf6jobwidgets-dev (>= 6.6.0~),
+         libkf6service-dev (>= 6.6.0~),
+         libkf6solid-dev (>= 6.6.0~),
+         libkf6widgetsaddons-dev (>= 6.6.0~),
+         libkf6windowsystem-dev (>= 6.6.0~),
+         qt6-base-dev (>= 6.5.0+dfsg~),
+         ${misc:Depends},
+         ${shlibs:Depends},
+         ${so:Depends},
+Recommends: libkf6kio-doc (= ${source:Version}),
+Description: resource and network access abstraction (development files)
+ KDE Input/Output framework provides a single API for
+ operating on files, whether local or on a remote server.
+ Additionally, KIO Slaves provide support for individual
+ protocols. Some particularly useful ones are http, ftp,
+ sftp, smb, nfs, ssh (fish), man, tar and zip.
+ .
+ This package contains the development files for kio.
+
+Package: libkf6kio-doc
+Architecture: all
+Section: doc
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+Description: resource and network access abstraction (documentation)
+ KDE Input/Output framework provides a single API for
+ operating on files, whether local or on a remote server.
+ Additionally, KIO Slaves provide support for individual
+ protocols. Some particularly useful ones are http, ftp,
+ sftp, smb, nfs, ssh (fish), man, tar and zip.
+ .
+ This package contains the QCH documentation files.
+
+Package: libkf6kiocore6
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+Multi-Arch: same
+Description: resource and network access abstraction (KIO core library)
+ KDE Input/Output framework provides a single API for
+ operating on files, whether local or on a remote server.
+ Additionally, KIO Slaves provide support for individual
+ protocols. Some particularly useful ones are http, ftp,
+ sftp, smb, nfs, ssh (fish), man, tar and zip.
+ .
+ This library contains the core classes.
+
+Package: libkf6kiofilewidgets6
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+Multi-Arch: same
+Description: resource and network access abstraction (KIO file widgets library)
+ KDE Input/Output framework provides a single API for
+ operating on files, whether local or on a remote server.
+ Additionally, KIO Slaves provide support for individual
+ protocols. Some particularly useful ones are http, ftp,
+ sftp, smb, nfs, ssh (fish), man, tar and zip.
+ .
+ This library contains some file dialog widgets.
+
+Package: libkf6kiogui6
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+Multi-Arch: same
+Description: resource and network access abstraction (KIO gui library)
+ KDE Input/Output framework provides a single API for
+ operating on files, whether local or on a remote server.
+ Additionally, KIO Slaves provide support for individual
+ protocols. Some particularly useful ones are http, ftp,
+ sftp, smb, nfs, ssh (fish), man, tar and zip.
+ .
+ This library contains gui related jobs.
+
+Package: libkf6kiowidgets6
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+Multi-Arch: same
+Description: resource and network access abstraction (KIO widgets library)
+ KDE Input/Output framework provides a single API for
+ operating on files, whether local or on a remote server.
+ Additionally, KIO Slaves provide support for individual
+ protocols. Some particularly useful ones are http, ftp,
+ sftp, smb, nfs, ssh (fish), man, tar and zip.
+ .
+ This library contains some UI widgets.
