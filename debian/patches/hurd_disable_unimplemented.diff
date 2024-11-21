@@ -1,0 +1,28 @@
+Author: Pino Toscano <pino@debian.org>
+Description: On Hurd, do not look for functions unimplemented in libc
+ The check_function_exists() function of cmake does not keep into account the
+ defines that glibc provides for the stubs (i.e. unimplemented functions that
+ always return ENOSYS), so some functions are detected as available.
+ Unfortunately, due to --fatal-warnings for the linker, linking will fail.
+ Hence, do not attempt to look for functions that are currently unimplemented
+ on GNU/Hurd's libc.
+Last-Update: 2024-05-09
+Forwarded: not-needed
+
+--- a/src/kioworkers/file/ConfigureChecks.cmake
++++ b/src/kioworkers/file/ConfigureChecks.cmake
+@@ -13,8 +13,12 @@ check_include_files(sys/xattr.h   HAVE_SYS_XATTR_H)
+ # On FreeBSD extattr.h doesn't compile without manually including sys/types.h
+ check_include_files("sys/types.h;sys/extattr.h" HAVE_SYS_EXTATTR_H)
+
+-check_function_exists(copy_file_range HAVE_COPY_FILE_RANGE)
++if (NOT (CMAKE_SYSTEM_NAME STREQUAL "GNU"))
++    check_function_exists(copy_file_range HAVE_COPY_FILE_RANGE)
++endif()
+
+-check_function_exists(posix_fadvise    HAVE_FADVISE)                  # KIO worker
++if (NOT (CMAKE_SYSTEM_NAME STREQUAL "GNU"))
++    check_function_exists(posix_fadvise    HAVE_FADVISE)                  # KIO worker
++endif()
+
+ check_struct_has_member("struct dirent" d_type dirent.h HAVE_DIRENT_D_TYPE LANGUAGE CXX)
