@@ -1,0 +1,4 @@
+usr/lib/*/libKF6KIOCore.so.6
+usr/lib/*/libKF6KIOCore.so.6.*
+usr/share/qlogging-categories6/kio.categories
+usr/share/qlogging-categories6/kio.renamecategories

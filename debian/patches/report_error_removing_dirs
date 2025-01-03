@@ -1,0 +1,59 @@
+From: Debian/Kubuntu Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
+Date: Thu, 31 Mar 2016 15:38:43 +0200
+Subject: report_error_removing_dirs
+Last-Updated: 2024-12-04
+
+===================================================================
+---
+ src/core/copyjob.cpp | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+--- a/src/core/copyjob.cpp
++++ b/src/core/copyjob.cpp
+@@ -240,6 +240,7 @@ public:
+         , m_bOverwriteAllDirs(false)
+         , m_bOverwriteWhenOlder(false)
+         , m_conflictError(0)
++        , m_dirsFailedError(0)
+         , m_reportTimer(nullptr)
+     {
+     }
+@@ -314,6 +315,8 @@ public:
+     };
+ 
+     int m_conflictError;
++    int m_dirsFailedError;
++    QString m_dirsFailedErrorText;
+ 
+     QTimer *m_reportTimer;
+     QElapsedTimer m_speedMeasurementTimer;
+@@ -2168,6 +2171,10 @@ void CopyJobPrivate::setNextDirAttribute
+             m_reportTimer->stop();
+         }
+ 
++        if (m_dirsFailedError) {
++            q->setError(m_dirsFailedError);
++            q->setErrorText(m_dirsFailedErrorText);
++        }
+         q->emitResult();
+     }
+ }
+@@ -2257,12 +2264,14 @@ void CopyJobPrivate::slotTotalSize(KJob
+ void CopyJobPrivate::slotResultDeletingDirs(KJob *job)
+ {
+     Q_Q(CopyJob);
++    const QUrl url = static_cast<KIO::SimpleJob *>(job)->url();
+     if (job->error()) {
+-        // Couldn't remove directory. Well, perhaps it's not empty
+-        // because the user pressed Skip for a given file in it.
+-        // Let's not display "Could not remove dir ..." for each of those dir !
++        m_dirsFailedError = job->error();
++        m_dirsFailedErrorText = job->errorText();
++        // Remove the parents
++        skip(url, true);
+     } else {
+-        m_successSrcList.append(static_cast<KIO::SimpleJob *>(job)->url());
++        m_successSrcList.append(url);
+     }
+     q->removeSubjob(job);
+     Q_ASSERT(!q->hasSubjobs());

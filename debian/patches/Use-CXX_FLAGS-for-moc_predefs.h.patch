@@ -1,0 +1,26 @@
+From: Maximiliano Curia <maxy@gnuservers.com.ar>
+Date: Wed, 28 Aug 2019 11:50:33 -0300
+Subject: Use CXX_FLAGS for moc_predefs.h
+Last-Updated: 2024-12-04
+
+---
+ src/core/CMakeLists.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+--- a/src/core/CMakeLists.txt
++++ b/src/core/CMakeLists.txt
+@@ -224,10 +224,12 @@ endif()
+
+ # this should be done by cmake, see bug 371721
+ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
++    separate_arguments(_cxxflags NATIVE_COMMAND "${CMAKE_CXX_FLAGS}")
+     add_custom_command(
+         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/moc_predefs.h
+-        COMMAND "${CMAKE_CXX_COMPILER}" "${CMAKE_CXX_COMPILER_ARG1}" "-dM" "-E" "-c" "${CMAKE_ROOT}/Modules/CMakeCXXCompilerABI.cpp" > ${CMAKE_CURRENT_BINARY_DIR}/moc_predefs.h
++        COMMAND "${CMAKE_CXX_COMPILER}" "${CMAKE_CXX_COMPILER_ARG1}" ${_cxxflags} "-dM" "-E" "-c" "${CMAKE_ROOT}/Modules/CMakeCXXCompilerABI.cpp" > ${CMAKE_CURRENT_BINARY_DIR}/moc_predefs.h
+     )
++    unset(_cxxflags)
+     set_property(TARGET KF6KIOCore APPEND PROPERTY AUTOMOC_MOC_OPTIONS --include ${CMAKE_CURRENT_BINARY_DIR}/moc_predefs.h)
+     set_property(TARGET KF6KIOCore APPEND PROPERTY AUTOGEN_TARGET_DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/moc_predefs.h)
+ endif()
+

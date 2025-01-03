@@ -1,4 +1,24 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all optimize=+lto
+
+include /usr/share/dpkg/architecture.mk
+
+ifneq (linux,$(DEB_HOST_ARCH_OS))
+        EXTRA_CMAKE_ARGS += -DWITH_WAYLAND=OFF
+endif
 
 %:
 	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DBUILD_QCH=ON -DBUILD_TESTING=OFF $(EXTRA_CMAKE_ARGS)
+
+override_dh_shlibdeps:
+	dh_shlibdeps $(patsubst %,-p%,$(filter lib%,$(shell dh_listpackages))) -- -xkio6
+	dh_shlibdeps --remaining-packages
+
+override_dh_auto_test:
+	# Disable dh_auto_test at build time
+	:

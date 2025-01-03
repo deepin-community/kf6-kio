@@ -1,0 +1,4 @@
+report_error_removing_dirs
+hurd_disable_unimplemented.diff
+Use-CXX_FLAGS-for-moc_predefs.h.patch
+upstream_1766_standardthumbnailjob-is-internal-header-not-installed.patch
