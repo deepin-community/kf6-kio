@@ -1,0 +1,31 @@
+From 654c144ccc17acb2bcdf8c33b18c3cfdc7598316 Mon Sep 17 00:00:00 2001
+From: Sune Vuorela <sune@vuorela.dk>
+Date: Thu, 5 Dec 2024 09:54:02 +0100
+Subject: [PATCH] StandardThumbnailJob is internal, header not installed
+
+---
+ src/gui/standardthumbnailjob_p.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/gui/standardthumbnailjob_p.h b/src/gui/standardthumbnailjob_p.h
+index 838e660657..0db832de13 100644
+--- a/src/gui/standardthumbnailjob_p.h
++++ b/src/gui/standardthumbnailjob_p.h
+@@ -4,13 +4,12 @@
+ */
+ #pragma once
+ 
+-#include "kiogui_export.h"
+ #include <kio/job.h>
+ 
+ namespace KIO
+ {
+ 
+-class KIOGUI_EXPORT StandardThumbnailJob : public KIO::Job
++class StandardThumbnailJob : public KIO::Job
+ {
+     Q_OBJECT
+ 
+-- 
+GitLab
+
