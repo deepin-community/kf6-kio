@@ -1,3 +1,9 @@
+kf6-kio (6.6.0-1deepin2) unstable; urgency=medium
+
+  * Add patch to find Qt6GuiPrivate CMake package explicitly on Qt >= 6.10.
+
+ -- xiepengfei <xiepengfei@uniontech.com>  Tue, 17 Nov 2026 15:20:05 +0800
+
 kf6-kio (6.6.0-1deepin1) unstable; urgency=medium
 
   * Rebuild with LTO enabled (dpkg vendor feature optimize/lto).

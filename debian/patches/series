@@ -1,3 +1,4 @@
 report_error_removing_dirs
 hurd_disable_unimplemented.diff
 Use-CXX_FLAGS-for-moc_predefs.h.patch
+find_qt6_guiprivate_on_qt610.patch
